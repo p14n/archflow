@@ -1,0 +1,14 @@
+accounts-deployment: {
+  open-account
+  verify-account
+}
+notifier-deployment: {
+  send-email
+}
+
+accounts-deployment.verify-account -> accounts-deployment.open-account: :account-verified
+accounts-deployment.verify-account -> notifier-deployment.send-email: :account-failed
+accounts-deployment.open-account -> notifier-deployment.send-email: :account-opened
+commands
+
+commands -> accounts-deployment.verify-account: account-requested
