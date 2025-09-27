@@ -1,4 +1,4 @@
-(ns core
+(ns com.p14n.flowarch.core
   (:require [clojure.set :as s]))
 
 

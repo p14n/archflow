@@ -1,17 +1,17 @@
-(ns core-test
+(ns com.p14n.flowarch.core-test
   (:require [clojure.test :refer [deftest testing is]]
-            [core :as c]
-            [example :as e]))
+            [com.p14n.flowarch.core :as c]
+            [com.p14n.flowarch.example :as e]))
 
 (deftest check-helper-functions
   (testing "Get all channels from system"
     (is (= #{:commands :new-accounts :notifications}
            (c/all-channels e/system))))
   (testing "Get all handlers for a given channel"
-    (is (= #{#'example/verify-account}
+    (is (= #{#'e/verify-account}
            (c/handlers-for-channel e/system :commands))))
   (testing "Get all handlers for a given event"
-    (is (= #{#'example/send-email}
+    (is (= #{#'e/send-email}
            (c/handlers-for-event e/system :account-failed))))
   (testing "Get output channel for event"
     (is (= :notifications
@@ -35,7 +35,7 @@
                                     :targets {:any [#'verify-account]}}))))
 
   (testing "Function doesn't receive expected events"
-    (is (= [[:function-doesnt-receive #'core-test/verify-account :monkey-dead]]
+    (is (= [[:function-doesnt-receive #'verify-account :monkey-dead]]
 
            (c/check-system-element {:event :monkey-dead
                                     :in [:commands]

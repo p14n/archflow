@@ -1,6 +1,6 @@
-(ns example
-  (:require [d2 :as d2]
-            [core :as c]))
+(ns com.p14n.flowarch.example
+  (:require [com.p14n.flowarch.d2 :as d2]
+            [com.p14n.flowarch.core :as c]))
 
 (defn verify-account
   {:receives #{:account-requested}
