@@ -1,7 +1,21 @@
 (ns core-test
   (:require [clojure.test :refer [deftest testing is]]
-            [core :as c]))
+            [core :as c]
+            [example :as e]))
 
+(deftest check-helper-functions
+  (testing "Get all channels from system"
+    (is (= #{:commands :new-accounts :notifications}
+           (c/all-channels e/system))))
+  (testing "Get all handlers for a given channel"
+    (is (= #{#'example/verify-account}
+           (c/handlers-for-channel e/system :commands))))
+  (testing "Get all handlers for a given event"
+    (is (= #{#'example/send-email}
+           (c/handlers-for-event e/system :account-failed))))
+  (testing "Get output channel for event"
+    (is (= :notifications
+           (c/output-channel-for-event e/system :account-requested :account-failed)))))
 
 (defn verify-account
   {:receives #{:account-requested}

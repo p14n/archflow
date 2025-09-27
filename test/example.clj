@@ -37,6 +37,7 @@
     :in [:new-accounts]
     :targets {:any [#'send-email]}}])
 
+
 (def accounts-deployment
   [#'verify-account
    #'open-account])

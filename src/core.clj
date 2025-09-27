@@ -34,3 +34,51 @@
        (remove empty?)
        (vec)))
 
+(defn all-channels
+  "Returns a set of all channels in the system"
+  [system]
+  (->> system
+       (map (juxt :in :out))
+       (map (fn [[event out]]
+              (-> out vals (concat event))))
+       (apply concat)
+       (into #{})))
+
+(defn x>> [s x]
+  (println "x>>" s x)
+  x)
+
+(defn handlers-in-system
+  "Returns a set of all handlers in the system"
+  [system]
+  (->> system
+       (map :targets)
+       (mapcat vals)
+       (apply concat)
+       (into #{})))
+
+(defn handlers-for-channel
+  "Returns a set of all handlers for a given channel"
+  [system channel]
+  (->> system
+       (filter (fn [{:keys [in]}]
+                 (some #{channel} in)))
+       (handlers-in-system)))
+
+(defn handlers-for-event
+  "Returns a set of all handlers for a given event"
+  [system ev]
+  (->> system
+       (filter (fn [{:keys [event]}]
+                 (= ev event)))
+       (handlers-in-system)))
+
+(defn output-channel-for-event
+  "Returns the output channel for a given event"
+  [system incoming-event outgoing-event]
+  (->> system
+       (filter (fn [{:keys [event]}]
+                 (= incoming-event event)))
+       (map :out)
+       (apply (partial merge-with concat))
+       outgoing-event))
