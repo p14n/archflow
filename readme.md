@@ -53,4 +53,4 @@ Turns this
 
 Into this
 
-![[gen.svg]]
+![Diagram](./gen.svg)
