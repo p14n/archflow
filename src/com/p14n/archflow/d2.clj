@@ -1,4 +1,4 @@
-(ns com.p14n.flowarch.d2
+(ns com.p14n.archflow.d2
   (:require [clojure.set :as set]))
 
 (defn v->name

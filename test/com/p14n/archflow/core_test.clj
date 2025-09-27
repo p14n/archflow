@@ -1,7 +1,7 @@
-(ns com.p14n.flowarch.core-test
+(ns com.p14n.archflow.core-test
   (:require [clojure.test :refer [deftest testing is]]
-            [com.p14n.flowarch.core :as c]
-            [com.p14n.flowarch.example :as e]))
+            [com.p14n.archflow.core :as c]
+            [com.p14n.archflow.example :as e]))
 
 (deftest check-helper-functions
   (testing "Get all channels from system"
