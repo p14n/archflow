@@ -29,16 +29,16 @@
     (is (= [[:function-output-not-handled :account-requested #{:account-failed :account-verified}]
             [:expected-output-not-produced :account-requested #{:monkey-dead}]]
 
-           (c/check-system-element {:event :account-requested
-                                    :in [:commands]
-                                    :out {:monkey-dead :notifications}
-                                    :targets {:any [#'verify-account]}}))))
+           (c/check-system-element meta {:event :account-requested
+                                         :in [:commands]
+                                         :out {:monkey-dead :notifications}
+                                         :targets {:any [#'verify-account]}}))))
 
   (testing "Function doesn't receive expected events"
     (is (= [[:function-doesnt-receive #'verify-account :monkey-dead]]
 
-           (c/check-system-element {:event :monkey-dead
-                                    :in [:commands]
-                                    :out {:account-verified :new-accounts
-                                          :account-failed :notifications}
-                                    :targets {:any [#'verify-account]}})))))
+           (c/check-system-element meta {:event :monkey-dead
+                                         :in [:commands]
+                                         :out {:account-verified :new-accounts
+                                               :account-failed :notifications}
+                                         :targets {:any [#'verify-account]}})))))
